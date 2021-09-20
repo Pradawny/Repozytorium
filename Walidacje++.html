@@ -1,0 +1,238 @@
+<!doctype html>
+<html><head>
+<meta charset="UTF-8">
+<title>jQuery </title>
+<script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+<script src="http://ajax.microsoft.com/ajax/jquery.validate/1.6/jquery.validate.js"></script>
+	<script type="text/javascript">
+           $(document).ready(function() {
+		         $.validator.addMethod(
+                    "regex",
+                    function(value, element, regexp) {
+                      var re = new RegExp(regexp);
+                      return this.optional(element) || re.test(value);
+                    },
+                    "Please check your input."
+                );
+                $.extend($.validator.messages, {
+                    required: "To pole jest wymagane.",
+                        remote: "Proszę naprawić to pole.",
+                        email: "Proszę podać prawidłowy adres email.",
+                        url: "Proszę podać prawidłowy URL.",
+                        date: "Proszę podać prawidłową datę",
+                        dateISO: "Proszę podać prawidłową datę (ISO).",
+                        number: "Proszę podać prawidłowy numer.",
+                        digits: "Proszę wstawić tylko cyfry.",
+                        creditcard: "Proszę podać prawidłowy numer karty kredytowej.",
+                        equalTo: "Proszę podać tą samą wartość.",
+                        accept: "Proszę podać wartość z prawidłowym rozszerzeniem.",
+                        maxlength: $.validator.format("Proszę podać nie więcej niż {0} znaków."),
+                        minlength: $.validator.format("Proszę podać co najmniej {0} znaków."),
+                        rangelength: $.validator.format("Proszę podać wartość, która jest od {0} do {1} znaków długa."),
+                        range: $.validator.format("Proszę podać wartość w zakresie od {0} do {1}."),
+                        max: $.validator.format("Proszę podać wartość mniejszą lub równą {0}."),
+                        min: $.validator.format("Proszę podać wartość większą lub równą {0}.")
+                });
+                $("#formularz").validate({
+				    rules: {
+                        name: {
+                            required: true,
+                            minlength: 2
+                        },
+                        email: {
+                            required: true,
+                            email: true
+                        },
+                        url: {
+							required: true,
+                            url: true
+                        },
+                        mess: {
+                            required: true
+                        },
+						miasto: {
+                            maxlength: 30,
+                            regex: "^[a-zA-Z]+$"
+                        },
+                        kodp: {
+                            regex: "^[0-9\-]+$"
+                        },
+                        ul: {
+                            maxlength: 30,
+                            regex: "^[A-Za-z0-9 ]+$"
+                        },
+                        nrd: {
+                            regex: "^[0-9 ]+$"
+                        }
+					},
+					errorPlacement: function(error, element){
+						if(element.is(':radio') || element.is(':checkbox'))
+							error.appendTo(element.parent());
+						else
+							error.insertAfter(element);
+					}
+				});
+				
+				$("#formularz-h").validate({
+				    rules: {
+                        cha: {
+                            required: true,
+                            minlength: 7,
+							maxlength: 15
+                        },
+						ncha:{
+							required: true,
+							minlength: 7,
+							maxlength: 15
+						},
+						pncha:{
+							required: true,
+							minlength: 7,
+							maxlength: 15,
+							equalTo: "#ncha"
+						}
+					},
+					errorPlacement: function(error, element){
+						if(element.is(':radio') || element.is(':checkbox'))
+							error.appendTo(element.parent());
+						else
+							error.insertAfter(element);
+					}
+				});
+				
+				$("#formularz2").validate({
+					rules: {
+                        browser: {
+                            required: true,
+                        },
+					},
+					errorPlacement: function(error, element){
+						if(element.is(':radio') || element.is(':checkbox'))
+							error.appendTo(element.parent());
+						else
+							error.insertAfter(element);
+					}
+				});
+				$("#formularz3").validate({
+					rules: {
+                        cplec: {
+                            required: true,
+                        },
+					},
+					errorPlacement: function(error, element){
+						if(element.is(':radio') || element.is(':checkbox'))
+							error.appendTo(element.parent());
+						else
+							error.insertAfter(element);
+					}
+				});
+				$("#formularz4").validate({
+					rules: {
+                        cjez: {
+                            required: true,
+                        },
+					},
+					errorPlacement: function(error, element){
+						if(element.is(':radio') || element.is(':checkbox'))
+							error.appendTo(element.parent());
+						else
+							error.insertAfter(element);
+					}
+				});
+		});
+	</script>
+	<style type="text/css">
+	 em, .error {
+	 color: red;
+	 }
+	</style>
+</head>
+<body>
+	<form id="formularz">
+		 <fieldset>
+			<legend>Prosty przyklad walidacji formularza</legend>
+				<p><label for="cname">Imie</label><em>*</em>
+			<input id="cname" name="name" size="25"/>
+			</p>
+				<p><label for="cemail">E-Mail</label><em>*</em>
+			<input id="cemail" name="email" size="25"/>
+			<p><label for="curl">URL</label><em>*</em>
+			<input id="curl" name="url" class="url" /></p>
+			<p><label for="cmes">Wiadomość</label><em>*</em>
+			<textarea id="cmessage" name="mess" size="25"></textarea>
+			</p>
+			<p><label for="cmi">Miasto</label><em>*</em>
+			<input id="cmia" name="miasto"/></p>
+			<p><label for="ckd">Kod pocztowy</label><em>*</em>
+			<input id="cko" name="kodp"/></p>
+			<p><label for="cul">Ulica</label><em>*</em>
+			<input id="cul" name="ul"/></p>
+			<p><label for="cnd">Numer domu</label><em>*</em>
+			<input id="cnur" name="nrd"/></p>
+			</p>
+				<p><input class="submit" type="submit" value="Wyslij !" />
+			</p>
+		 </fieldset>
+	</form>
+	<br>
+		<form id="formularz-h">
+		 <fieldset>
+			<legend>Prosty przyklad walidacji formularza - <b>pole password</b></legend>
+			<p><label for="cha">Bieżące hasło: </label><em>*</em>
+			<input type="password" id="cha" name="cha"/></p>
+			</p>
+			<p><label for="ncha">Nowe hasło: </label><em>*</em>
+			<input type="password" id="ncha" name="ncha"/></p>
+			</p>
+			<p><label for="pncha">Nowe hasło(ponownie): </label><em>*</em>
+			<input type="password" id="pncha" name="pncha"/></p>
+			</p>
+				<p><input class="submit" type="submit" value="Wyslij !" />
+			</p>
+		 </fieldset>
+	</form>
+	<br>
+		<form id="formularz2">
+		 <fieldset>
+			<legend>Prosty przyklad walidacji formularza - <b>pole wyboru</b></legend>
+			<p><b>Zaznacz płeć (masz tylko jeden wybór)</b></p>
+			<input type="radio" name="cplec" value="K" >Kobieta</td><br>
+			<input type="radio" name="cplec" value="M" >Mężczyzna</td>
+			</p>
+				<p><input class="submit" type="submit" value="Wyslij !" />
+			</p>
+		</fieldset>
+	</form>
+	<br>
+	<form id="formularz3">
+		 <fieldset>
+			<legend>Prosty przyklad walidacji formularza - <b>pole wyboru</b></legend>
+			<p><b>Zaznacz płeć (masz tylko jeden wybór)</b></p>
+			<input type="radio" name="cplec" value="K" >Kobieta</td><br>
+			<input type="radio" name="cplec" value="M" >Mężczyzna</td>
+			</p>
+				<p><input class="submit" type="submit" value="Wyslij !" />
+			</p>
+		 </fieldset>
+	</form>
+	<br>
+	<form id="formularz4">
+		 <fieldset>
+			<legend>Prosty przyklad walidacji formularza - <b>pole wyboru</b></legend>
+			<p><b>Zaznacz jakich uczysz się języków (masz kilka możliwośći)</b></p>
+				<tr>
+					<td>
+						<input type="checkbox" name="cjez" value="Ang" >Angielski<br>
+						<input type="checkbox" name="cjez" value="Nie" >Niemiecki<br>
+						<input type="checkbox" name="cjez" value="Ros" >Rosyjski<br>
+						<input type="checkbox" name="cjez" value="Fr"  >Francuski<br>
+						<input type="checkbox" name="cjez" value="Mal" >Malajalam
+					</td>
+				</tr>
+			</p>
+				<p><input class="submit" type="submit" value="Wyslij !" />
+			</p>
+		 </fieldset>
+	</form>
+</body>
+</html>
